@@ -1,0 +1,151 @@
+select posts.*, users.name
+from posts
+inner join users
+on users.id = posts.id
+
+
+https://pt.stackoverflow.com/questions/344575/como-retornar-registros-relecionados-entre-tabelas-em-laravel
+https://laravel-docs-pt-br.readthedocs.io/en/latest/eloquent/#relacionamentos
+https://blog.especializati.com.br/criar-tabelas-laravel-migrations/
+
+
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1:3306
+-- Generation Time: 07-Nov-2019 às 23:15
+-- Versão do servidor: 5.7.26
+-- versão do PHP: 7.3.5
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `multiauth`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `admins`
+--
+
+DROP TABLE IF EXISTS `admins`;
+CREATE TABLE IF NOT EXISTS `admins` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admins_email_unique` (`email`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `admins`
+--
+
+INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'John', 'john@email.com', '$2y$10$2LbRZ9tbQsy/IMmy7QMMVeEfXASqYso/HzxYEmgeEVIcVQyraMRUG', NULL, '2019-11-03 01:21:25', '2019-11-03 01:21:25');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(6, '2014_10_12_000000_create_users_table', 3),
+(7, '2014_10_12_100000_create_password_resets_table', 3),
+(4, '2019_10_28_231637_create_products_table', 2),
+(8, '2019_09_08_173655_create_admins_table', 3),
+(11, '2019_10_29_001838_create_table_posts', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `password_resets`
+--
+
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `email` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `posts`
+--
+
+DROP TABLE IF EXISTS `posts`;
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `posts_name_foreign` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'João da Silva', 'joao@email.com', '$2y$10$9YwLVwRl4U5jXyHM4XnZvOXXQ4L.HnRDbFIEw074VdlHS7lkXroM6', 'rrOjI7WRSa5YmwWsi9tf62G4dOybgTavcSqc9xL7aVoE4FKqUvGqz9zO6UAZ', '2019-11-03 01:22:49', '2019-11-03 01:22:49'),
+(2, 'Joana da Silva', 'joana@email.com', '$2y$10$aRWqv1dLZD58qk4eHxKr9exjA4eoM6tvFVu7Ylq36mTCuP7ubKlH2', 'PBbAsW4BHUzrWA57HL02talmFF6GTqEvwsVuv5M4raTgfQ9dX34B6hw1Pw8f', '2019-11-03 01:23:22', '2019-11-03 01:23:22'),
+(4, 'TestName', 'test@email.com', '$2y$10$4y6AnhRSaKw01kkI45QfeONMX70tClvZzMfJPVvmAHSP1PaOWmbPC', NULL, '2019-11-04 00:18:31', '2019-11-04 00:18:31'),
+(5, 'Joana da Silva', 'joanaa@email.com', '$2y$10$9SHpzYCXPV2PMyTbe7CI7OW1DoOA823W3BxkOEORi.bFI9ZvVrgti', 'o0gx6zhAo2XTJKAj0EMgsp9Gla9Ay18R9uOODD7mWjdRGQOLxaD1Dt70OQcU', '2019-11-05 02:47:39', '2019-11-05 02:47:39');
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
